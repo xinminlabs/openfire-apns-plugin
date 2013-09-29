@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+  <class>com.wecapslabs.openfire.plugin.apns.OpenfireApns</class>
+  <name>${pom.name}</name>
+  <description>${pom.description}</description>
+  <author>${pom.organization.name}</author>
+  <version>${pom.version}</version>
+  <date>${openfire-plugin.build.date}</date>
+  <minServerVersion>3.3.0</minServerVersion>
+  <licenseType>gpl</licenseType>
+
+  <adminconsole>
+    <tab id="tab-server">
+      <sidebar id="sidebar-server-settings">
+        <item id="apns-settings" name="APNS Settings" url="apns.jsp" description="Click to manage the apns certificate" />
+      </sidebar>
+    </tab>
+  </adminconsole>
+</plugin>
