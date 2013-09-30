@@ -15,12 +15,18 @@
     boolean success = request.getParameter("success") != null;
     boolean error = request.getParameter("error") != null;
     String password = ParamUtils.getParameter(request, "password");
+    String badge = ParamUtils.getParameter(request, "badge");
+    String sound = ParamUtils.getParameter(request, "sound");
+    String production = ParamUtils.getParameter(request, "production");
 
     OpenfireApns plugin = (OpenfireApns) XMPPServer.getInstance().getPluginManager().getPlugin("openfire-apns");
 
     // Handle a save
     if (save) {
         plugin.setPassword(password);
+        plugin.setBadge(badge);
+        plugin.setSound(sound);
+        plugin.setProduction(production);
 
         try {
             List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -39,6 +45,11 @@
         }
 
     }
+
+    password = plugin.getPassword();
+    badge = Integer.toString(plugin.getBadge());
+    sound = plugin.getSound();
+    production = plugin.getProduction() ? "true" : "false";
 %>
 
 <html>
@@ -70,7 +81,20 @@
     <br>
 
     <label for="password">certificate password:</label>
-    <input type="password" name="password" />
+    <input type="password" name="password" value="<%= password %>" />
+    <br>
+
+    <label for="badge">payload badge</label>
+    <input type="badge" name="badge" value="<%= badge %>" />
+    <br>
+
+    <label for="sound">payload sound</label>
+    <input type="badge" name="sound" value="<%= sound %>" />
+    <br>
+
+    <label for="production">sandbox or production</label>
+    <input type="radio" name="sandbox" value="false" <%= production == "true" ? "" : "checked" %>>Sandbox
+    <input type="radio" name="production" value="true" <%= production == "true" ? "checked" : "" %>>Production
 </div>
 <input type="submit" value="Save">
 </form>

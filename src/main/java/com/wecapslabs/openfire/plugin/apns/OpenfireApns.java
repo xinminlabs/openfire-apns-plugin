@@ -26,7 +26,6 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
 
     public static final Logger Log = LoggerFactory.getLogger(OpenfireApns.class);
 
-    private String password;
     private InterceptorManager interceptorManager;
     private OpenfireApnsDBHandler dbManager;
 
@@ -41,11 +40,34 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
 
     public void setPassword(String password) {
         JiveGlobals.setProperty("plugin.apns.password", password);
-        this.password = password;
     }
 
     public String getPassword() {
-        return this.password;
+        return JiveGlobals.getProperty("plugin.apns.password", "");
+    }
+
+    public void setBadge(String badge) {
+        JiveGlobals.setProperty("plugin.apns.badge", badge);
+    }
+
+    public int getBadge() {
+        return Integer.parseInt(JiveGlobals.getProperty("plugin.apns.badge", "1"));
+    }
+
+    public void setSound(String sound) {
+        JiveGlobals.setProperty("plugin.apns.sound", sound);
+    }
+
+    public String getSound() {
+        return JiveGlobals.getProperty("plugin.apns.sound", "default");
+    }
+
+    public void setProduction(String production) {
+        JiveGlobals.setProperty("plugin.apns.production", production);
+    }
+
+    public boolean getProduction() {
+        return Boolean.parseBoolean(JiveGlobals.getProperty("plugin.apns.badge", "false"));
     }
 
     public void initializePlugin(PluginManager pManager, File pluginDirectory) {
@@ -54,8 +76,6 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
         IQHandler myHandler = new OpenfireApnsIQHandler();
         IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();
         iqRouter.addHandler(myHandler);
-
-        this.password = JiveGlobals.getProperty("plugin.apns.password", "");
     }
 
     public void destroyPlugin() {
@@ -77,15 +97,12 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
 
                 String[] userID = targetJID_Bare.split("@");
 
-                String payloadString = userID[0];
-                payloadString = payloadString.concat(": ");
-                payloadString = payloadString.concat(body);
+                String payloadString = userID[0] + ": " + body;
 
                 String deviceToken = dbManager.getDeviceToken(targetJID);
                 if (deviceToken == null) return;
 
-                PushMessage message = new PushMessage(payloadString, 1, "Default.caf", OpenfireApns.keystorePath(), getPassword(), false, deviceToken);
-                message.start();
+                new PushMessage(payloadString, getBadge(), getSound(), OpenfireApns.keystorePath(), getPassword(), getProduction(), deviceToken).start();
             }
         }
     }

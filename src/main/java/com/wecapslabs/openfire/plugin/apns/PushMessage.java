@@ -24,7 +24,7 @@ class PushMessage extends Thread {
     private boolean production;
     private String token;
 
-    public PushMessage(String message, int badge, String sound, Object keystore, String password, boolean production, String token ) {
+    public PushMessage(String message, int badge, String sound, Object keystore, String password, boolean production, String token) {
         this.message = message;
         this.badge = badge;
         this.sound = sound;
