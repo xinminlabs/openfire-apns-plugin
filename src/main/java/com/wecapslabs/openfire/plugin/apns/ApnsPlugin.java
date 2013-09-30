@@ -22,16 +22,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class OpenfireApns implements Plugin, PacketInterceptor {
+public class ApnsPlugin implements Plugin, PacketInterceptor {
 
-    public static final Logger Log = LoggerFactory.getLogger(OpenfireApns.class);
+    public static final Logger Log = LoggerFactory.getLogger(ApnsPlugin.class);
 
     private InterceptorManager interceptorManager;
-    private OpenfireApnsDBHandler dbManager;
+    private ApnsDBHandler dbManager;
 
-    public OpenfireApns() {
+    public ApnsPlugin() {
         interceptorManager = InterceptorManager.getInstance();
-        dbManager = new OpenfireApnsDBHandler();
+        dbManager = new ApnsDBHandler();
     }
 
     public static String keystorePath() {
@@ -73,7 +73,7 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
     public void initializePlugin(PluginManager pManager, File pluginDirectory) {
         interceptorManager.addInterceptor(this);
 
-        IQHandler myHandler = new OpenfireApnsIQHandler();
+        IQHandler myHandler = new ApnsIQHandler();
         IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();
         iqRouter.addHandler(myHandler);
     }
@@ -102,7 +102,7 @@ public class OpenfireApns implements Plugin, PacketInterceptor {
                 String deviceToken = dbManager.getDeviceToken(targetJID);
                 if (deviceToken == null) return;
 
-                new PushMessage(payloadString, getBadge(), getSound(), OpenfireApns.keystorePath(), getPassword(), getProduction(), deviceToken).start();
+                new PushMessage(payloadString, getBadge(), getSound(), ApnsPlugin.keystorePath(), getPassword(), getProduction(), deviceToken).start();
             }
         }
     }

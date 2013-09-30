@@ -10,16 +10,16 @@ import org.xmpp.packet.IQ;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.PacketError;
 
-public class OpenfireApnsIQHandler extends IQHandler {
+public class ApnsIQHandler extends IQHandler {
 
     private IQHandlerInfo info;
 
-    private OpenfireApnsDBHandler dbManager;
+    private ApnsDBHandler dbManager;
 
-    public OpenfireApnsIQHandler() {
-        super("OpenfireApns IQ Handler");
+    public ApnsIQHandler() {
+        super("Apns IQ Handler");
         info = new IQHandlerInfo("query","urn:xmpp:apns");
-        dbManager = new OpenfireApnsDBHandler();
+        dbManager = new ApnsDBHandler();
     }
 
     @Override

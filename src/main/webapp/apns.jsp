@@ -2,7 +2,7 @@
                  java.util.List,
                  org.jivesoftware.openfire.XMPPServer,
                  org.jivesoftware.util.*,
-                 com.wecapslabs.openfire.plugin.apns.OpenfireApns,
+                 com.wecapslabs.openfire.plugin.apns.ApnsPlugin,
                  org.apache.commons.fileupload.FileItem,
                  org.apache.commons.fileupload.disk.DiskFileItemFactory,
                  org.apache.commons.fileupload.servlet.ServletFileUpload,
@@ -19,7 +19,7 @@
     String sound = ParamUtils.getParameter(request, "sound");
     String production = ParamUtils.getParameter(request, "production");
 
-    OpenfireApns plugin = (OpenfireApns) XMPPServer.getInstance().getPluginManager().getPlugin("openfire-apns");
+    ApnsPlugin plugin = (ApnsPlugin) XMPPServer.getInstance().getPluginManager().getPlugin("openfire-apns");
 
     // Handle a save
     if (save) {
@@ -34,7 +34,7 @@
             for (FileItem item : multiparts) {
                 if (!item.isFormField()) {
                     String filename = item.getName();
-                    item.write(new File(OpenfireApns.keystorePath()));
+                    item.write(new File(ApnsPlugin.keystorePath()));
                 }
             }
             response.sendRedirect("apns.jsp?success=true");

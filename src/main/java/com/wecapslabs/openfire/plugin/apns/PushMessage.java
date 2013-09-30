@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 class PushMessage extends Thread {
 
-    private static final Logger Log = LoggerFactory.getLogger(OpenfireApns.class);
+    private static final Logger Log = LoggerFactory.getLogger(ApnsPlugin.class);
 
-    private OpenfireApnsDBHandler dbManager;
+    private ApnsDBHandler dbManager;
 
     private String message;
     private int badge;
@@ -33,7 +33,7 @@ class PushMessage extends Thread {
         this.production = production;
         this.token = token;
 
-        dbManager = new OpenfireApnsDBHandler();
+        dbManager = new ApnsDBHandler();
     }
 
     public void run() {

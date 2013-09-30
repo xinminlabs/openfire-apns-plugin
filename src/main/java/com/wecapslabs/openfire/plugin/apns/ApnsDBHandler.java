@@ -12,9 +12,9 @@ import org.xmpp.packet.JID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OpenfireApnsDBHandler {
+public class ApnsDBHandler {
 
-    private static final Logger Log = LoggerFactory.getLogger(OpenfireApns.class);
+    private static final Logger Log = LoggerFactory.getLogger(ApnsPlugin.class);
 
     private static final String LOAD_TOKEN = "SELECT devicetoken FROM ofAPNS WHERE JID=?";
     private static final String INSERT_TOKEN = "INSERT INTO ofAPNS VALUES(?, ?) ON DUPLICATE KEY UPDATE devicetoken = ?";

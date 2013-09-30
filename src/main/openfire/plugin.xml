@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin>
-  <class>com.wecapslabs.openfire.plugin.apns.OpenfireApns</class>
+  <class>com.wecapslabs.openfire.plugin.apns.ApnsPlugin</class>
   <name>${pom.name}</name>
   <description>${pom.description}</description>
   <author>${pom.organization.name}</author>
