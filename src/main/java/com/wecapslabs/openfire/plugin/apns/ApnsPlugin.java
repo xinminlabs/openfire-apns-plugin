@@ -1,6 +1,7 @@
 package com.wecapslabs.openfire.plugin.apns;
 
 import java.io.File;
+import java.util.List;
 
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.container.Plugin;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 public class ApnsPlugin implements Plugin, PacketInterceptor {
 
-    public static final Logger Log = LoggerFactory.getLogger(ApnsPlugin.class);
+    private static final Logger Log = LoggerFactory.getLogger(ApnsPlugin.class);
 
     private InterceptorManager interceptorManager;
     private ApnsDBHandler dbManager;
@@ -90,19 +91,31 @@ public class ApnsPlugin implements Plugin, PacketInterceptor {
             if(original instanceof Message) {
                 Message receivedMessage = (Message) original;
 
-                JID targetJID = receivedMessage.getTo();
+                if (receivedMessage.getType() == Message.Type.chat) {
+                    JID targetJID = receivedMessage.getTo();
 
-                String targetJID_Bare = targetJID.toBareJID();
-                String body = receivedMessage.getBody();
+                    String user = targetJID.getNode();
+                    String body = receivedMessage.getBody();
+                    String payloadString = user + ": " + body;
 
-                String[] userID = targetJID_Bare.split("@");
+                    String deviceToken = dbManager.getDeviceToken(targetJID);
+                    if (deviceToken == null) return;
 
-                String payloadString = userID[0] + ": " + body;
+                    new PushMessage(payloadString, getBadge(), getSound(), ApnsPlugin.keystorePath(), getPassword(), getProduction(), deviceToken).start();
+                } else if (receivedMessage.getType() == Message.Type.groupchat) {
+                    JID sourceJID = receivedMessage.getFrom();
+                    JID targetJID = receivedMessage.getTo();
 
-                String deviceToken = dbManager.getDeviceToken(targetJID);
-                if (deviceToken == null) return;
+                    String user = sourceJID.getNode();
+                    String body = receivedMessage.getBody();
+                    String payloadString = user + ": " + body;
+                    String roomName = targetJID.getNode();
 
-                new PushMessage(payloadString, getBadge(), getSound(), ApnsPlugin.keystorePath(), getPassword(), getProduction(), deviceToken).start();
+                    List<String> deviceTokens = dbManager.getDeviceTokens(roomName);
+                    if (deviceTokens.isEmpty()) return;
+
+                    new PushMessage(payloadString, getBadge(), getSound(), ApnsPlugin.keystorePath(), getPassword(), getProduction(), deviceTokens).start();
+                }
             }
         }
     }

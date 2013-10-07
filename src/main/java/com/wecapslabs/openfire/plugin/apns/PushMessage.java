@@ -22,23 +22,23 @@ class PushMessage extends Thread {
     private Object keystore;
     private String password;
     private boolean production;
-    private String token;
+    private Object devices;
 
-    public PushMessage(String message, int badge, String sound, Object keystore, String password, boolean production, String token) {
+    public PushMessage(String message, int badge, String sound, Object keystore, String password, boolean production, Object devices) {
         this.message = message;
         this.badge = badge;
         this.sound = sound;
         this.keystore = keystore;
         this.password = password;
         this.production = production;
-        this.token = token;
+        this.devices = devices;
 
         dbManager = new ApnsDBHandler();
     }
 
     public void run() {
         try {
-            PushedNotifications notifications = Push.combined(message, badge, sound, keystore, password, production, token);
+            PushedNotifications notifications = Push.combined(message, badge, sound, keystore, password, production, devices);
 
             for (PushedNotification notification : notifications) {
                 if (notification.isSuccessful()) {
