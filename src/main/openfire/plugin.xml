@@ -8,6 +8,8 @@
   <version>${pom.version}</version>
   <date>${openfire-plugin.build.date}</date>
   <minServerVersion>3.3.0</minServerVersion>
+  <databaseKey>apns</databaseKey>
+  <databaseVersion>0</databaseVersion>
   <licenseType>gpl</licenseType>
 
   <adminconsole>
