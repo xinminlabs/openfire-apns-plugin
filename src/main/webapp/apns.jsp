@@ -93,8 +93,8 @@
     <br>
 
     <label for="production">sandbox or production</label>
-    <input type="radio" name="sandbox" value="false" <%= production == "true" ? "" : "checked" %>>Sandbox
-    <input type="radio" name="production" value="true" <%= production == "true" ? "checked" : "" %>>Production
+    <input type="radio" name="production" value="false" <%= production.equals("true") ? "" : "checked" %>>Sandbox
+    <input type="radio" name="production" value="true" <%= production.equals("true") ? "checked" : "" %>>Production
 </div>
 <input type="submit" value="Save">
 </form>
