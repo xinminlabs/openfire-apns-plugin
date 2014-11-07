@@ -1,5 +1,7 @@
 Building
 ---
+Pre-requisite: Use Maven 2.2.1
+---
 1. Install maven-openfire-plugin from https://github.com/srt/maven-openfire-plugin
 2. Obtain a copy of `openfire.jar` and install it into maven. There are serveral ways you can do it, here are two of them:
   * Option 1. Download source code of the version of openfire you need at http://www.igniterealtime.org/downloads/source.jsp
