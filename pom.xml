@@ -21,7 +21,7 @@
     <dependency>
       <groupId>org.igniterealtime.openfire</groupId>
       <artifactId>openfire</artifactId>
-      <version>3.8.2</version>
+      <version>3.10</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -55,12 +55,15 @@
           <source>1.5</source>
           <target>1.5</target>
         </configuration>
-        <version>3.0</version>
+        <version>3.6.1</version>
       </plugin>
       <plugin>
         <groupId>com.reucon.maven.plugins</groupId>
         <artifactId>maven-openfire-plugin</artifactId>
         <extensions>true</extensions>
+        <configuration>
+          <javaEncoding>UTF-8</javaEncoding>
+        </configuration>
         <version>1.0.2-SNAPSHOT</version>
       </plugin>
     </plugins>
