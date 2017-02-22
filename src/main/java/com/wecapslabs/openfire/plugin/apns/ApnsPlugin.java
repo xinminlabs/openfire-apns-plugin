@@ -68,7 +68,7 @@ public class ApnsPlugin implements Plugin, PacketInterceptor {
     }
 
     public boolean getProduction() {
-        return Boolean.parseBoolean(JiveGlobals.getProperty("plugin.apns.badge", "false"));
+        return Boolean.parseBoolean(JiveGlobals.getProperty("plugin.apns.production", "false"));
     }
 
     public void initializePlugin(PluginManager pManager, File pluginDirectory) {
